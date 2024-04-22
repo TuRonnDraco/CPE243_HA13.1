@@ -1,0 +1,16 @@
+---
+ - name: block IP address
+   hosts: remote_servers
+   connection: httpapi
+   tasks:
+     - name: Test connection
+       command: hostname
+
+     - include_role:
+         name: ansible_security.acl_manager
+         tasks_from: block_ip
+       vars:
+         source_ip: 192.168.56.111
+         destination_ip: 192.168.56.107
+         ansible_network_os: checkpoint
+
